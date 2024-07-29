@@ -14,7 +14,7 @@ export default function Explore() {
   });
 
   return (
-    <div className="container mt-12 space-y-4">
+    <div className="container space-y-4">
       <div className="flex flex-col items-center justify-center space-y-2">
         <h2 className="text-2xl font-semibold">Explore Trips</h2>
         <div className="text-center">

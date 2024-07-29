@@ -37,15 +37,15 @@ const UserNav = () => {
         </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <IconPlaneTilt className="text-primfill-primary mr-2 size-5 fill-primary stroke-1" />
+          <IconPlaneTilt className="mr-2 size-5 fill-primary stroke-1 text-primary" />
           <span>My Trips</span>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <IconSettingsFilled className="text-primfill-primary mr-2 size-5 stroke-1" />
+          <IconSettingsFilled className="mr-2 size-5 stroke-1 text-primary" />
           <span>Settings</span>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <IconLogout className="text-primfill-primary mr-2 size-5 stroke-1" />
+          <IconLogout className="mr-2 size-5 stroke-1 text-primary" />
           <span>Logout</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
