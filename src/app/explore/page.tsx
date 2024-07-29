@@ -1,5 +1,5 @@
 import TripCard from '@/components/explore/explore-card';
-import SearchBar from '@/components/explore/searchBar';
+import SearchBar from '@/components/explore/search-bar';
 
 export default function Explore() {
   const dummyData = Array(6).fill({
@@ -7,8 +7,10 @@ export default function Explore() {
     title: 'Exclusice Seoul 8-day Trip',
     desc: 'enjoy a beautiful vacation in the vibrant city of seoul, get lost in the culture of blossom',
     providerName: 'Chris Nolan',
-    duration: 7,
-    likes: 20,
+    duration: {
+      from: 1721478234,
+      to: 1722167509,
+    },
   });
 
   return (
@@ -31,7 +33,6 @@ export default function Explore() {
               desc={elem.desc}
               providerName={elem.providerName}
               duration={elem.duration}
-              likes={elem.likes}
               key={elem.title}
             />
           ))}

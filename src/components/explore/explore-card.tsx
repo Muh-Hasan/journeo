@@ -1,3 +1,4 @@
+import { formatDistance, fromUnixTime } from 'date-fns';
 import Image from 'next/image';
 import * as React from 'react';
 
@@ -16,8 +17,10 @@ interface Props {
   desc: string;
   avatar?: string;
   providerName: string;
-  duration: number;
-  likes: number;
+  duration: {
+    from: number;
+    to: number;
+  };
 }
 
 const TripCard: React.FC<Props> = ({
@@ -27,7 +30,6 @@ const TripCard: React.FC<Props> = ({
   avatar,
   providerName,
   duration,
-  likes,
 }) => {
   return (
     <Card className="cursor-pointer space-y-3 border-none shadow-none">
@@ -59,7 +61,13 @@ const TripCard: React.FC<Props> = ({
           </div>
         </div>
         <div className="flex">
-          {duration} days • ❤️ {likes}
+          {formatDistance(
+            fromUnixTime(duration.from),
+            fromUnixTime(duration.to),
+            {
+              includeSeconds: false,
+            },
+          )}
         </div>
       </CardFooter>
     </Card>
