@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 
 const Trips = () => {
   return (
-    <div className="container mt-12 space-y-10">
+    <div className="container space-y-10">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-medium">Your Trips</h2>
         <Button className="space-x-1">
