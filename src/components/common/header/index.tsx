@@ -11,41 +11,35 @@ import UserNav from './user-nav';
 const Header = () => {
   const [isLoggedIn] = useState(true); // temp state
   return (
-    <header className="border-b border-gray-50 shadow-sm">
-      <div className="container flex h-14 items-center sm:h-16">
-        <div className="grow">
-          <Link
-            href="/"
-            className="text-xl font-semibold tracking-wide text-primary"
-          >
-            Journeo
-          </Link>
-        </div>
-        <div className="hidden items-center gap-5 sm:flex">
-          <Link
-            href="/explore"
-            className="font-medium text-primary hover:underline hover:underline-offset-4"
-          >
-            Explore
-          </Link>
-
-          {isLoggedIn ? (
-            <UserNav />
-          ) : (
-            <>
-              <Link href="/#">
-                <Button size="sm" variant="secondary">
-                  Get started
-                </Button>
-              </Link>
-              <Link href="/#">
-                <Button size="sm">Sign in</Button>
-              </Link>
-            </>
-          )}
-        </div>
-        <MobileNav />
+    <header className="container flex h-14 items-center sm:h-16">
+      <div className="grow">
+        <Link href="/" className="text-2xl font-bold text-primary">
+          Journeo.
+        </Link>
       </div>
+      <div className="hidden items-center gap-x-4 sm:flex">
+        <Link href="/explore">
+          <Button variant="link">Explore</Button>
+        </Link>
+
+        {isLoggedIn ? (
+          <UserNav />
+        ) : (
+          <>
+            <Link href="/#">
+              <Button size="sm">Get started</Button>
+            </Link>
+            <Button
+              size="sm"
+              variant="outline"
+              className="items-center gap-x-1"
+            >
+              Sign in
+            </Button>
+          </>
+        )}
+      </div>
+      <MobileNav />
     </header>
   );
 };
