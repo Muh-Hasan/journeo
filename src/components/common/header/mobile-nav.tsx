@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 import MobileLink from './mobile-link';
-import UserMobileNav from './user-mobile-nav';
+// import { Separator } from "@/components/ui/separator";
 
 const MobileNav = () => {
   const [open, setOpen] = useState(false);
@@ -24,20 +24,20 @@ const MobileNav = () => {
               size="lg"
               className="w-full justify-start gap-2"
             >
-              <IconWorld className="size-7" />
+              <IconWorld className="size-6 text-gray-500" />
               <span>Explore</span>
             </Button>
           </MobileLink>
           {/* <Separator />
-          <Button className="w-full" variant="secondary" size="lg">
+          <Button className="w-full" size="lg">
             Get started
           </Button>
-          <Button className="w-full" size="lg">
+          <Button className="w-full" variant="secondary" size="lg">
             Sign in
           </Button> */}
 
           {/* LoggedIn */}
-          <UserMobileNav />
+          {/* <UserMobileNav /> */}
         </div>
       </SheetContent>
     </Sheet>

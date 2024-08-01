@@ -19,7 +19,7 @@ const UserMobileNav = () => {
           size="lg"
           className="w-full justify-start gap-2"
         >
-          <IconPlaneTilt className="size-7 fill-primary text-primary" />
+          <IconPlaneTilt className="size-6 fill-gray-500 text-gray-500" />
           <span>My Trips</span>
         </Button>
       </MobileLink>
@@ -30,18 +30,21 @@ const UserMobileNav = () => {
           size="lg"
           className="w-full justify-start gap-2"
         >
-          <IconSettingsFilled className="size-7" />
+          <IconSettingsFilled className="size-6 text-gray-500" />
           <span>Settings</span>
         </Button>
       </MobileLink>
 
       <Separator />
-      <Button className="flex h-auto w-full items-center justify-between px-8 py-4">
+      <Button
+        variant="secondary"
+        className="flex h-auto w-full items-center justify-between px-8 py-4"
+      >
         <div>
           <h3 className="font-medium">Muhammad Hasan</h3>
-          <p className="text-secondary">hello@journeo.com</p>
+          <p className="text-gray-500">hello@journeo.com</p>
         </div>
-        <IconLogout />
+        <IconLogout className="text-gray-500" />
       </Button>
     </>
   );
