@@ -61,7 +61,7 @@ const TimeSelectionContent: FC<Props> = ({ time, setTime, baseDate }) => {
         <div className="flex w-full flex-col items-center">
           <span className="text-sm text-gray-600">End time</span>
           <Input
-            className="py- h-auto px-0.5 pl-2 outline-none focus:border-gray-700"
+            className="h-auto px-0.5 pl-2 outline-none focus:border-gray-700"
             ref={endTimeRef}
             value={format(fromUnixTime(time.end), 'h:mm a')}
             readOnly
