@@ -2,7 +2,7 @@
 
 import { isBefore } from 'date-fns';
 import type { FC } from 'react';
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 
 import {
   Popover,
@@ -23,7 +23,7 @@ interface Props {
 const TimeSelectionDropDown: FC<Props> = ({ startTime, endTime }) => {
   const [time, setTime] = useState({ start: startTime, end: endTime });
 
-  const isTimeValid = isBefore(endTime, startTime);
+  const isEndtimeBefore = isBefore(time.end, time.start);
 
   return (
     <>
@@ -32,13 +32,18 @@ const TimeSelectionDropDown: FC<Props> = ({ startTime, endTime }) => {
           <TimeSelectionTrigger startTime={time.start} endTime={time.end} />
         </PopoverTrigger>
 
-        <PopoverContent className="max-w-xs space-y-2" align="start">
+        <PopoverContent className="max-w-xs space-y-2.5" align="start">
           <TimeSelectionContent
             time={time}
             setTime={setTime}
             baseDate={startTime}
           />
-          <Button className="w-full" size="sm" disabled={isTimeValid}>
+          {isEndtimeBefore ? (
+            <div className="text-xs font-medium text-red-500">
+              End time cannot be before the start time.
+            </div>
+          ) : null}
+          <Button className="w-full" size="sm" disabled={isEndtimeBefore}>
             Save
           </Button>
         </PopoverContent>
@@ -53,7 +58,12 @@ const TimeSelectionDropDown: FC<Props> = ({ startTime, endTime }) => {
             setTime={setTime}
             baseDate={startTime}
           />
-          <Button className="w-full" size="sm" disabled={isTimeValid}>
+          {isEndtimeBefore ? (
+            <div className="text-xs font-medium text-red-500">
+              End time cannot be before the start time.
+            </div>
+          ) : null}
+          <Button className="w-full" size="sm" disabled={isEndtimeBefore}>
             Save
           </Button>
         </DrawerContent>
