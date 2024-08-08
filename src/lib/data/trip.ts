@@ -4,7 +4,7 @@ export const trip = {
     country: 'Pakistan',
   },
   from: 1672531200,
-  to: 1723120432,
+  to: 1673059200,
   itinerary: [
     {
       date: 1672531200,

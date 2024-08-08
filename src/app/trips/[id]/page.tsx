@@ -1,3 +1,4 @@
+import { format, fromUnixTime } from 'date-fns';
 import React, { Fragment } from 'react';
 
 import DateSidebar from '@/components/trip/date-sidebar';
@@ -6,7 +7,7 @@ import LocationCard from '@/components/trip/location-card';
 import TravelModeDropDown from '@/components/trip/travel-mode-dropdown';
 import VerticalDivider from '@/components/trip/vertical-divider';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import { travelModeOption, trip } from '@/lib/trip_data';
+import { travelModeOption, trip } from '@/lib/data/trip';
 
 const Page = () => {
   return (
@@ -21,8 +22,11 @@ const Page = () => {
             <DateSidebar endDate={trip.to} startDate={trip.from} />
           </ScrollArea>
           <section className="w-full">
-            {trip.itinerary.map((t) => (
-              <Fragment key={t.date}>
+            {trip.itinerary.map((t, dayIdx) => (
+              <div
+                key={t.date}
+                data-date={format(fromUnixTime(t.date), 'd-MMM')}
+              >
                 <DayInfo day={t.date} />
                 {t.activities.map((activity, activityIdx) => (
                   <Fragment key={activity.location}>
@@ -32,14 +36,18 @@ const Page = () => {
                       time={activity.time}
                       image="/placeholder_location.png"
                     />
-                    {activityIdx < t.activities.length - 1 ? (
-                      <TravelModeDropDown options={travelModeOption} />
-                    ) : (
-                      <VerticalDivider />
-                    )}
+                    {!(
+                      dayIdx === trip.itinerary.length - 1 &&
+                      activityIdx === t.activities.length - 1
+                    ) &&
+                      (activityIdx < t.activities.length - 1 ? (
+                        <TravelModeDropDown options={travelModeOption} />
+                      ) : (
+                        <VerticalDivider />
+                      ))}
                   </Fragment>
                 ))}
-              </Fragment>
+              </div>
             ))}
           </section>
         </section>
