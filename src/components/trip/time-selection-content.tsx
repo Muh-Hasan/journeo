@@ -55,7 +55,8 @@ const TimeSelectionContent: FC<Props> = ({
     };
 
     registerInput();
-  }, [time]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [time, inputProps?.onChange]);
 
   return (
     <>

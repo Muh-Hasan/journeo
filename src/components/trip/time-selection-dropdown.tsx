@@ -37,7 +37,7 @@ const TimeSelectionDropDown: FC<Props> = ({
     <>
       <Popover>
         <PopoverTrigger
-          className={`mt-1 hidden sm:block ${size === 'auto' ? 'size-auto text-xs' : null}  ${size === 'medium' ? 'h-[30px] w-1/2 text-sm' : null} ${size === 'full' ? 'h-[40px] w-full' : null} } `}
+          className={`mt-1 hidden sm:block ${size === 'auto' ? 'size-auto text-xs' : null}  ${size === 'medium' ? 'h-[30px] w-1/2 text-sm' : null} ${size === 'full' ? 'h-[40px] w-full' : null} `}
         >
           <TimeSelectionTrigger startTime={time.start} endTime={time.end} />
         </PopoverTrigger>
@@ -61,7 +61,7 @@ const TimeSelectionDropDown: FC<Props> = ({
       </Popover>
       <Drawer>
         <DrawerTrigger
-          className={`mt-1.5 block sm:hidden ${size === 'auto' ? 'size-auto text-xs' : null} ${size === 'medium' ? 'h-[30px] w-1/2 p-2 text-xs' : null} ${size === 'full' ? 'h-[40px] w-full text-xs' : null}}`}
+          className={`mt-1.5 block sm:hidden ${size === 'auto' ? 'size-auto text-xs' : null} ${size === 'medium' ? 'h-[30px] w-1/2 p-2 text-xs' : null} ${size === 'full' ? 'h-[40px] w-full text-xs' : null}`}
         >
           <TimeSelectionTrigger startTime={time.start} endTime={time.end} />
         </DrawerTrigger>
