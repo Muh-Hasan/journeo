@@ -1,18 +1,5 @@
-export interface FormFields {
-  destination: string;
-  duration: {
-    to: Date | undefined;
-    from: Date | undefined;
-  };
-  preferenceTime: string;
-  visibility: boolean;
-  flight?: string | undefined;
-  hotelBooking: string;
-  hotelName: string | undefined;
-  hotelPhone?: string;
-  hotelLocation: string;
-  checkIn: {
-    from: Date | undefined;
-    to: Date | undefined;
-  };
-}
+import type { z } from 'zod';
+
+import type { CreateTripSchema } from '../schema/create-trip';
+
+export type CreateTripType = z.infer<typeof CreateTripSchema>;
