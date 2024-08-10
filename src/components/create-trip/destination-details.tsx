@@ -3,7 +3,7 @@
 /* eslint-disable */
 import { CalendarIcon, MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import { format, isBefore } from 'date-fns';
-import type { Control, UseFormTrigger } from 'react-hook-form';
+import type { Control, UseFormSetValue, UseFormTrigger } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -23,27 +23,30 @@ import {
 import { cn } from '@/lib/utils';
 import { CreateTripType } from '@/lib/types/create-trip.interface';
 import TimeSelectionDropDown from '../trip/time-selection-dropdown';
+import { Toggle } from '../ui/toggle';
 
 interface Props {
   stepfn: (num: number) => void;
+  setValue: UseFormSetValue<CreateTripType>
   control: Control<CreateTripType>;
   trigger: UseFormTrigger<CreateTripType>
 }
 
-const DestinationDetails: React.FC<Props> = ({ stepfn,control,trigger }) => {
+const DestinationDetails: React.FC<Props> = ({ stepfn,setValue,control,trigger }) => {
 
   const onSubmit = async () => {
     const res = await trigger(['destination','duration','times'])
-    if(res){
+   if(res){
       stepfn(2)
     }
   }  
   return (
     <>
       <div className="text-center text-2xl sm:text-4xl">
-        Select the Perfect Destination
+        Create Vacation
       </div>
 
+      
       <FormField
         control={control}
         name="destination"
@@ -64,14 +67,14 @@ const DestinationDetails: React.FC<Props> = ({ stepfn,control,trigger }) => {
         )}
       />
       
-      <div className='block sm:flex gap-3 pt-8 space-y-4 sm:space-y-0'>
+      <div className='block sm:flex gap-3 pt-6 space-y-4 sm:space-y-0'>
         <div className='sm:w-1/2'>
       <FormField
         control={control}
         name="duration"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="pb-1 text-sm font-semibold block">Choose a date plan from the calendar!</FormLabel>
+            <FormLabel>Choose a date plan!</FormLabel>
             <FormControl>
               <Popover>
                 <PopoverTrigger asChild>
@@ -124,11 +127,9 @@ const DestinationDetails: React.FC<Props> = ({ stepfn,control,trigger }) => {
         name="times"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className='text-sm font-semibold block'>Select the time of your adventure</FormLabel>
+            <FormLabel>Select a time frame</FormLabel>
             <FormControl>
-              <div className='pl-3'>
-              <TimeSelectionDropDown startTime={1722744000} endTime={1722751200} inputProps={field} size='full'/>
-              </div>
+              <TimeSelectionDropDown startTime={1722744000} endTime={1722751200} setValue={setValue} size='full'/>
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -137,34 +138,27 @@ const DestinationDetails: React.FC<Props> = ({ stepfn,control,trigger }) => {
       </div>
       </div>
 
-      <div className="block sm:flex justify-between items-center pt-4 space-y-3 sm:space-y-0">
       <FormField
         control={control}
         name="visibility"
         render={({ field }) => (
           <FormItem>
+            <div className='w-full flex items-center justify-between pt-4'>
+            <FormLabel className='text-sm font-semibold block'>Share Vacation with Others?</FormLabel>
             <FormControl>
-              <div className="flex justify-center">
-                
-                <div className="flex items-center">
-                  <div className="flex text-sm font-semibold">
-                    Allow Others to view this vacation?
-                  </div>
-                  <div
-                    className="ml-1 cursor-pointer text-sm font-bold text-blue-600 underline"
-                    {...field}
-                    onClick={() => field.onChange(!field.value)}
-                  >
-                    {field.value ? 'Yes' : 'No'}
-                  </div>
-                </div>
-              </div>
+            <Toggle size="sm" aria-label="visibility toggle" className= {cn(!field.value && 'text-red-400')}
+                    onPressedChange={(value) => field.onChange(value)}
+                    pressed={field.value}>
+              {field.value ? "Yes" : " No"}
+            </Toggle>
             </FormControl>
-            <FormMessage />
+            </div>
           </FormItem>
         )}
       />
-        <Button type='button'  onClick={onSubmit}>
+
+      <div className='flex justify-end pt-6'>
+        <Button type='button' className='w-full'  onClick={onSubmit}>
           Next
         </Button>
       </div>

@@ -2,8 +2,9 @@ import { IconArrowRight } from '@tabler/icons-react';
 import { format, fromUnixTime } from 'date-fns';
 import type { Dispatch, FC, SetStateAction } from 'react';
 import React, { useEffect, useRef, useState } from 'react';
-import type { FieldValues } from 'react-hook-form';
+import type { UseFormSetValue } from 'react-hook-form';
 
+import type { CreateTripType } from '@/lib/types/create-trip.interface';
 import { generateTimeOptions } from '@/lib/utils';
 
 import { Button } from '../ui/button';
@@ -17,14 +18,14 @@ interface Props {
   };
   setTime: Dispatch<SetStateAction<{ start: number; end: number }>>;
   baseDate: number;
-  inputProps?: FieldValues;
+  setValue?: UseFormSetValue<CreateTripType>;
 }
 
 const TimeSelectionContent: FC<Props> = ({
   time,
   setTime,
   baseDate,
-  inputProps,
+  setValue,
 }) => {
   const [activeInput, setActiveInput] = useState<'start' | 'end'>('start');
 
@@ -50,13 +51,9 @@ const TimeSelectionContent: FC<Props> = ({
   };
 
   useEffect(() => {
-    const registerInput = () => {
-      inputProps?.onChange(time);
-    };
-
-    registerInput();
+    setValue('times', time);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [time, inputProps?.onChange]);
+  }, [time]);
 
   return (
     <>

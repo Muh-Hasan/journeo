@@ -3,13 +3,15 @@
 import { isBefore } from 'date-fns';
 import type { FC } from 'react';
 import React, { useState } from 'react';
-import type { FieldValues } from 'react-hook-form';
+import type { UseFormSetValue } from 'react-hook-form';
 
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import type { CreateTripType } from '@/lib/types/create-trip.interface';
+import { cn } from '@/lib/utils';
 
 import { Button } from '../ui/button';
 import { Drawer, DrawerContent, DrawerTrigger } from '../ui/drawer';
@@ -19,14 +21,14 @@ import TimeSelectionTrigger from './time-selection-trigger';
 interface Props {
   startTime: number;
   endTime: number;
-  inputProps?: FieldValues;
+  setValue?: UseFormSetValue<CreateTripType>;
   size?: 'auto' | 'medium' | 'full';
 }
 
 const TimeSelectionDropDown: FC<Props> = ({
   startTime,
   endTime,
-  inputProps,
+  setValue,
   size = 'auto',
 }) => {
   const [time, setTime] = useState({ start: startTime, end: endTime });
@@ -37,7 +39,12 @@ const TimeSelectionDropDown: FC<Props> = ({
     <>
       <Popover>
         <PopoverTrigger
-          className={`mt-1 hidden sm:block ${size === 'auto' ? 'size-auto text-xs' : null}  ${size === 'medium' ? 'h-[30px] w-1/2 text-sm' : null} ${size === 'full' ? 'h-[40px] w-full' : null} `}
+          className={cn(
+            'mt-1 hidden sm:block',
+            size === 'auto' && 'size-auto text-xs',
+            size === 'medium' && 'h-[30px] w-1/2 text-sm',
+            size === 'full' && 'h-[40px] w-full',
+          )}
         >
           <TimeSelectionTrigger startTime={time.start} endTime={time.end} />
         </PopoverTrigger>
@@ -47,7 +54,7 @@ const TimeSelectionDropDown: FC<Props> = ({
             time={time}
             setTime={setTime}
             baseDate={startTime}
-            inputProps={inputProps}
+            setValue={setValue}
           />
           {isEndtimeBefore ? (
             <div className="text-xs font-medium text-red-500">
@@ -61,15 +68,24 @@ const TimeSelectionDropDown: FC<Props> = ({
       </Popover>
       <Drawer>
         <DrawerTrigger
-          className={`mt-1.5 block sm:hidden ${size === 'auto' ? 'size-auto text-xs' : null} ${size === 'medium' ? 'h-[30px] w-1/2 p-2 text-xs' : null} ${size === 'full' ? 'h-[40px] w-full text-xs' : null}`}
+          className={cn(
+            'mt-1.5 block sm:hidden',
+            size === 'auto' && 'size-auto text-xs',
+            size === 'medium' && 'h-[30px] w-1/2 p-2 text-xs',
+            size === 'full' && 'h-[40px] w-full text-xs',
+          )}
         >
           <TimeSelectionTrigger startTime={time.start} endTime={time.end} />
         </DrawerTrigger>
-        <DrawerContent className="container space-y-3">
+        <DrawerContent
+          className="container space-y-3"
+          aria-describedby="time-selection"
+        >
           <TimeSelectionContent
             time={time}
             setTime={setTime}
             baseDate={startTime}
+            setValue={setValue}
           />
           {isEndtimeBefore ? (
             <div className="text-xs font-medium text-red-500">

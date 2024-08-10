@@ -93,7 +93,7 @@ const HotelDetails: React.FC<Props> = ({ stepfn, control }) => {
         )}
       />
 
-      <div className="block space-y-3 sm:flex">
+      <div className="block items-center space-y-3 sm:flex sm:space-y-0">
         <div className="sm:w-1/2">
           <FormField
             control={control}
@@ -184,9 +184,33 @@ const HotelDetails: React.FC<Props> = ({ stepfn, control }) => {
         </div>
       </div>
 
-      <div className="flex justify-between">
-        <Button onClick={() => stepfn(2)}>Prev</Button>
-        <Button type="submit">Submit</Button>
+      <div className="flex justify-between gap-4 pt-6">
+        <Button
+          type="button"
+          variant="secondary"
+          className="w-[30%]"
+          onClick={() => stepfn(2)}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M5 12l14 0" />
+            <path d="M5 12l6 6" />
+            <path d="M5 12l6 -6" />
+          </svg>
+        </Button>
+        <Button type="submit" className="w-[70%]">
+          Submit
+        </Button>
       </div>
     </>
   );
