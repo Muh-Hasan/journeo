@@ -19,8 +19,8 @@ export const CreateTripSchema = z.object({
     ),
   times: z
     .object({
-      start: z.number(),
-      end: z.number(),
+      start: z.number().nullable(),
+      end: z.number().nullable(),
     })
     .refine((elem) => elem.start && elem.end, {
       message: 'Timings are required',
@@ -33,7 +33,12 @@ export const CreateTripSchema = z.object({
   ticektNo: z.string().min(1, 'Ticket number is required'),
   hotelBooking: z.string().min(1, 'Booking confirmation is required'),
   hotelName: z.string().min(1, 'Hotel name is required'),
-  hotelPhone: z.string().optional(),
+  hotelPhone: z
+    .string()
+    .regex(/^\+\d{1,3}-\d{7,15}$/, {
+      message: 'Invalid phone number format\nExample: +91-1234567890',
+    })
+    .optional(),
   hotelLocation: z.string().min(1, 'Location is required'),
   checkIn: z
     .object({
@@ -41,7 +46,7 @@ export const CreateTripSchema = z.object({
       end: z.date(),
     })
     .refine(({ start, end }) => start && end && isAfter(end, start), {
-      message: 'The end date cannot be before the start date.',
+      message: 'Check-out date must be after check-in date',
       path: ['end'],
     }),
 });

@@ -12,7 +12,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import type { CreateTripType } from '@/lib/types/create-trip.interface';
+import type { CreateTripType } from '@/lib/types/create-trip';
 import { cn } from '@/lib/utils';
 
 import { Calendar } from '../ui/calendar';

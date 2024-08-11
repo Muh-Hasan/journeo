@@ -10,7 +10,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import type { CreateTripType } from '@/lib/types/create-trip.interface';
+import type { CreateTripType } from '@/lib/types/create-trip';
 import { cn } from '@/lib/utils';
 
 import { Button } from '../ui/button';
@@ -43,7 +43,7 @@ const TimeSelectionDropDown: FC<Props> = ({
             'mt-1 hidden sm:block',
             size === 'auto' && 'size-auto text-xs',
             size === 'medium' && 'h-[30px] w-1/2 text-sm',
-            size === 'full' && 'h-[40px] w-full',
+            size === 'full' && 'h-[40px] w-full mt-0',
           )}
         >
           <TimeSelectionTrigger startTime={time.start} endTime={time.end} />
@@ -72,7 +72,7 @@ const TimeSelectionDropDown: FC<Props> = ({
             'mt-1.5 block sm:hidden',
             size === 'auto' && 'size-auto text-xs',
             size === 'medium' && 'h-[30px] w-1/2 p-2 text-xs',
-            size === 'full' && 'h-[40px] w-full text-xs',
+            size === 'full' && 'h-[40px] w-full text-xs mt-0',
           )}
         >
           <TimeSelectionTrigger startTime={time.start} endTime={time.end} />

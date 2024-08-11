@@ -8,7 +8,7 @@ import type { Control, UseFormSetValue, UseFormTrigger } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
 import { CreateTripSchema } from '@/lib/schema/create-trip';
-import type { CreateTripType } from '@/lib/types/create-trip.interface';
+import type { CreateTripType } from '@/lib/types/create-trip';
 
 import { Form } from '../ui/form';
 import DestinationDetails from './destination-details';
@@ -64,7 +64,6 @@ export default function TripForm() {
       ticektNo: '',
       hotelBooking: '',
       hotelName: '',
-      hotelPhone: '',
       hotelLocation: '',
     },
     resolver: zodResolver(CreateTripSchema),
@@ -73,6 +72,7 @@ export default function TripForm() {
   const { control, handleSubmit, trigger, setValue } = form;
 
   const onSubmit = (values: CreateTripType) => values;
+
   return (
     <div className="w-[300px] xs:w-[400px] sm:w-[600px]">
       <Form {...form}>

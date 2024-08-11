@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { PopoverContent } from '@/components/ui/popover';
-import type { CreateTripType } from '@/lib/types/create-trip.interface';
+import type { CreateTripType } from '@/lib/types/create-trip';
 import { cn } from '@/lib/utils';
 
 interface Props {
@@ -132,7 +132,6 @@ const HotelDetails: React.FC<Props> = ({ stepfn, control }) => {
                         />
                       </PopoverContent>
                     </Popover>
-                    <FormMessage />
                   </FormItem>
                 </FormControl>
                 <FormMessage />

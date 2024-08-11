@@ -2,8 +2,8 @@ import TripForm from '@/components/create-trip/trip-form';
 
 export default function CreateTrip() {
   return (
-    <main className="flex justify-center">
+    <div className="flex grow items-center justify-center">
       <TripForm />
-    </main>
+    </div>
   );
 }

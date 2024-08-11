@@ -4,7 +4,7 @@ import type { Dispatch, FC, SetStateAction } from 'react';
 import React, { useEffect, useRef, useState } from 'react';
 import type { UseFormSetValue } from 'react-hook-form';
 
-import type { CreateTripType } from '@/lib/types/create-trip.interface';
+import type { CreateTripType } from '@/lib/types/create-trip';
 import { generateTimeOptions } from '@/lib/utils';
 
 import { Button } from '../ui/button';
@@ -51,7 +51,14 @@ const TimeSelectionContent: FC<Props> = ({
   };
 
   useEffect(() => {
-    setValue('times', time);
+    const registerInput = () => {
+      try {
+        if (setValue) setValue('times', time);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    registerInput();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [time]);
 
