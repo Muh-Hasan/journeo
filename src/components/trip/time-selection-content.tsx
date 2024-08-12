@@ -1,8 +1,10 @@
 import { IconArrowRight } from '@tabler/icons-react';
 import { format, fromUnixTime } from 'date-fns';
 import type { Dispatch, FC, SetStateAction } from 'react';
-import React, { Fragment, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import type { UseFormSetValue } from 'react-hook-form';
 
+import type { CreateTripType } from '@/lib/types/create-trip';
 import { generateTimeOptions } from '@/lib/utils';
 
 import { Button } from '../ui/button';
@@ -16,9 +18,15 @@ interface Props {
   };
   setTime: Dispatch<SetStateAction<{ start: number; end: number }>>;
   baseDate: number;
+  setValue?: UseFormSetValue<CreateTripType>;
 }
 
-const TimeSelectionContent: FC<Props> = ({ time, setTime, baseDate }) => {
+const TimeSelectionContent: FC<Props> = ({
+  time,
+  setTime,
+  baseDate,
+  setValue,
+}) => {
   const [activeInput, setActiveInput] = useState<'start' | 'end'>('start');
 
   const startTimeRef = useRef<HTMLInputElement>(null);
@@ -41,6 +49,18 @@ const TimeSelectionContent: FC<Props> = ({ time, setTime, baseDate }) => {
       startTimeRef.current?.focus();
     }
   };
+
+  useEffect(() => {
+    const registerInput = () => {
+      try {
+        if (setValue) setValue('times', time);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    registerInput();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [time]);
 
   return (
     <>

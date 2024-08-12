@@ -10,7 +10,7 @@ interface Props {
 
 const TimeSelectionTrigger: FC<Props> = ({ startTime, endTime }) => {
   return (
-    <div className="flex items-center gap-1 rounded-lg border border-solid border-gray-300 bg-white p-1 px-2 text-xs text-gray-700">
+    <div className="flex size-full items-center justify-center gap-1 rounded-lg border border-solid border-gray-300 bg-white p-1 text-gray-700">
       {format(fromUnixTime(startTime), 'h:mm a')}
       <IconArrowRight className="size-3" />
       {format(fromUnixTime(endTime), 'h:mm a')}
