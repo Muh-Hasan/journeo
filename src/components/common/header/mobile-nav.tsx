@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 import MobileLink from './mobile-link';
+import UserMobileNav from './user-mobile-nav';
 // import { Separator } from "@/components/ui/separator";
 
 const MobileNav = () => {
@@ -37,7 +38,7 @@ const MobileNav = () => {
           </Button> */}
 
           {/* LoggedIn */}
-          {/* <UserMobileNav /> */}
+          <UserMobileNav />
         </div>
       </SheetContent>
     </Sheet>
