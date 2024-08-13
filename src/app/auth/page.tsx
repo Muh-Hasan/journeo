@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const Page = () => {
   return (
-    <div className="flex grow items-center justify-center">
+    <div className="container flex grow items-center justify-center sm:p-0">
       <Tabs defaultValue="signup" className="my-8 w-[450px]">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="signup">Sign Up</TabsTrigger>
