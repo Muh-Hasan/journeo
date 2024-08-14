@@ -1,14 +1,17 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import React, { Fragment, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 import MobileNav from './mobile-nav';
 import UserNav from './user-nav';
 
 const Header = () => {
+  const pathname = usePathname();
   const [isLoggedIn] = useState(true); // temp state
   return (
     <header className="container flex h-14 items-center sm:h-16">
@@ -17,7 +20,12 @@ const Header = () => {
           Journeo.
         </Link>
       </div>
-      <div className="hidden items-center gap-x-4 sm:flex">
+      <div
+        className={cn(
+          'hidden items-center gap-x-4 sm:flex',
+          pathname.includes('/auth') && '!hidden',
+        )}
+      >
         <Link href="/explore">
           <Button variant="link">Explore</Button>
         </Link>
