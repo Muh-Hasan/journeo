@@ -45,7 +45,7 @@ const UserMobileNav = async () => {
           variant="secondary"
           className="flex h-auto w-full items-center justify-between px-8 py-4"
         >
-          <div>
+          <div className="text-left">
             <h3 className="font-medium">
               {user?.given_name} {user?.family_name}
             </h3>

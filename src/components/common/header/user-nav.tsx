@@ -51,7 +51,7 @@ const UserNav = async () => {
           <span>Settings</span>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <LogoutLink className="flex">
+          <LogoutLink className="flex w-full">
             <IconLogout className="mr-2 size-5 stroke-1 text-gray-500" />
             <span>Logout</span>
           </LogoutLink>
