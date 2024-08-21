@@ -25,7 +25,7 @@ const UserNav = async () => {
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar className="size-8">
-          <AvatarImage src={user?.picture} />
+          <AvatarImage src={user?.picture ?? undefined} />
           <AvatarFallback>
             {user?.given_name?.at(0)}
             {user?.family_name?.at(0)}
