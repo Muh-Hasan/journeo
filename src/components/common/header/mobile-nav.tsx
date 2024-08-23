@@ -1,19 +1,24 @@
-'use client';
-
+import {
+  LoginLink,
+  RegisterLink,
+} from '@kinde-oss/kinde-auth-nextjs/components';
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { IconMenu2, IconWorld } from '@tabler/icons-react';
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 import MobileLink from './mobile-link';
 import UserMobileNav from './user-mobile-nav';
-// import { Separator } from "@/components/ui/separator";
 
-const MobileNav = () => {
-  const [open, setOpen] = useState(false);
+const MobileNav = async () => {
+  const { isAuthenticated } = getKindeServerSession();
+  const isLoggedIn = await isAuthenticated();
+
   return (
-    <Sheet open={open} onOpenChange={setOpen}>
+    <Sheet>
       <SheetTrigger asChild className="block cursor-pointer sm:hidden">
         <IconMenu2 className="text-primary" />
       </SheetTrigger>
@@ -29,16 +34,23 @@ const MobileNav = () => {
               <span>Explore</span>
             </Button>
           </MobileLink>
-          {/* <Separator />
-          <Button className="w-full" size="lg">
-            Get started
-          </Button>
-          <Button className="w-full" variant="secondary" size="lg">
-            Sign in
-          </Button> */}
-
-          {/* LoggedIn */}
-          <UserMobileNav />
+          {isLoggedIn ? (
+            <UserMobileNav />
+          ) : (
+            <>
+              <Separator />
+              <RegisterLink>
+                <Button className="w-full" size="lg">
+                  Get started
+                </Button>
+              </RegisterLink>
+              <LoginLink>
+                <Button className="w-full" variant="secondary" size="lg">
+                  Sign in
+                </Button>
+              </LoginLink>
+            </>
+          )}
         </div>
       </SheetContent>
     </Sheet>

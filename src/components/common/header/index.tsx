@@ -1,18 +1,20 @@
-'use client';
-
+import {
+  LoginLink,
+  RegisterLink,
+} from '@kinde-oss/kinde-auth-nextjs/components';
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import React, { Fragment, useState } from 'react';
+import React from 'react';
 
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
 
 import MobileNav from './mobile-nav';
 import UserNav from './user-nav';
 
-const Header = () => {
-  const pathname = usePathname();
-  const [isLoggedIn] = useState(true); // temp state
+const Header = async () => {
+  const { isAuthenticated } = getKindeServerSession();
+  const isLoggedIn = await isAuthenticated();
+
   return (
     <header className="container flex h-14 items-center sm:h-16">
       <div className="grow">
@@ -20,12 +22,7 @@ const Header = () => {
           Journeo.
         </Link>
       </div>
-      <div
-        className={cn(
-          'hidden items-center gap-x-4 sm:flex',
-          pathname.includes('/auth') && '!hidden',
-        )}
-      >
+      <div className="hidden items-center gap-x-4 sm:flex">
         <Link href="/explore">
           <Button variant="link">Explore</Button>
         </Link>
@@ -34,16 +31,18 @@ const Header = () => {
           <UserNav />
         ) : (
           <>
-            <Link href="/#">
+            <RegisterLink>
               <Button size="sm">Get started</Button>
-            </Link>
-            <Button
-              size="sm"
-              variant="outline"
-              className="items-center gap-x-1"
-            >
-              Sign in
-            </Button>
+            </RegisterLink>
+            <LoginLink>
+              <Button
+                size="sm"
+                variant="outline"
+                className="items-center gap-x-1"
+              >
+                Sign in
+              </Button>
+            </LoginLink>
           </>
         )}
       </div>

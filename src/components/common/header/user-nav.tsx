@@ -1,5 +1,5 @@
-'use client';
-
+import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/components';
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import {
   IconLogout,
   IconPlaneTilt,
@@ -17,22 +17,28 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-const UserNav = () => {
+const UserNav = async () => {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar className="size-8">
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
+          <AvatarImage src={user?.picture ?? undefined} />
+          <AvatarFallback>
+            {user?.given_name?.at(0)}
+            {user?.family_name?.at(0)}
+          </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="p-2 md:w-56">
         <div className="mb-2 space-y-1">
           <DropdownMenuLabel className="text-ellipsis text-nowrap py-0 font-medium">
-            Muhammad Hasan
+            {user?.given_name} {user?.family_name}
           </DropdownMenuLabel>
           <DropdownMenuLabel className="text-ellipsis text-nowrap py-0 font-normal text-gray-500">
-            hello@journeo.com
+            {user?.email}
           </DropdownMenuLabel>
         </div>
         <DropdownMenuSeparator />
@@ -45,8 +51,10 @@ const UserNav = () => {
           <span>Settings</span>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <IconLogout className="mr-2 size-5 stroke-1 text-gray-500" />
-          <span>Logout</span>
+          <LogoutLink className="flex w-full">
+            <IconLogout className="mr-2 size-5 stroke-1 text-gray-500" />
+            <span>Logout</span>
+          </LogoutLink>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
