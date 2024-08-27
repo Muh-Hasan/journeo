@@ -5,6 +5,7 @@ import { Figtree } from 'next/font/google';
 
 import Footer from '@/components/common/footer';
 import Header from '@/components/common/header';
+import { Toaster } from '@/components/ui/toaster';
 
 const figtree = Figtree({
   subsets: ['latin'],
@@ -28,6 +29,7 @@ export default function RootLayout({
         <div className="flex min-h-screen flex-col">
           <Header />
           <main className="my-12 flex flex-1 flex-col">{children}</main>
+          <Toaster />
           <Footer />
         </div>
       </body>

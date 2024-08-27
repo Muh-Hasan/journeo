@@ -19,8 +19,8 @@ export const CreateTripSchema = z.object({
     ),
   times: z
     .object({
-      start: z.number().nullable(),
-      end: z.number().nullable(),
+      start: z.number(),
+      end: z.number(),
     })
     .refine((elem) => elem.start && elem.end, {
       message: 'Timings are required',

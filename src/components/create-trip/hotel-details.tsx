@@ -22,9 +22,10 @@ import { cn } from '@/lib/utils';
 interface Props {
   stepfn: (num: number) => void;
   control: Control<CreateTripType>;
+  btnState: boolean;
 }
 
-const HotelDetails: React.FC<Props> = ({ stepfn, control }) => {
+const HotelDetails: React.FC<Props> = ({ stepfn, control, btnState }) => {
   return (
     <>
       <div className="text-center text-2xl sm:text-4xl">
@@ -207,8 +208,71 @@ const HotelDetails: React.FC<Props> = ({ stepfn, control }) => {
             <path d="M5 12l6 -6" />
           </svg>
         </Button>
-        <Button type="submit" className="w-[70%]">
-          Submit
+        <Button type="submit" disabled={btnState} className="w-[70%]">
+          {btnState ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width={35}
+              viewBox="0 0 200 200"
+            >
+              <circle
+                fill="#FFFEF7"
+                stroke="#FFFEF7"
+                stroke-width="2"
+                r="15"
+                cx="40"
+                cy="100"
+              >
+                <animate
+                  attributeName="opacity"
+                  calcMode="spline"
+                  dur="1.4"
+                  values="1;0;1;"
+                  keySplines=".5 0 .5 1;.5 0 .5 1"
+                  repeatCount="indefinite"
+                  begin="-.4"
+                />
+              </circle>
+              <circle
+                fill="#FFFEF7"
+                stroke="#FFFEF7"
+                stroke-width="2"
+                r="15"
+                cx="100"
+                cy="100"
+              >
+                <animate
+                  attributeName="opacity"
+                  calcMode="spline"
+                  dur="1.4"
+                  values="1;0;1;"
+                  keySplines=".5 0 .5 1;.5 0 .5 1"
+                  repeatCount="indefinite"
+                  begin="-.2"
+                />
+              </circle>
+              <circle
+                fill="#FFFEF7"
+                stroke="#FFFEF7"
+                stroke-width="2"
+                r="15"
+                cx="160"
+                cy="100"
+              >
+                <animate
+                  attributeName="opacity"
+                  calcMode="spline"
+                  dur="1.4"
+                  values="1;0;1;"
+                  keySplines=".5 0 .5 1;.5 0 .5 1"
+                  repeatCount="indefinite"
+                  begin="0"
+                />
+              </circle>
+            </svg>
+          ) : (
+            'Submit'
+          )}
         </Button>
       </div>
     </>
