@@ -5,7 +5,7 @@ import { Figtree } from 'next/font/google';
 
 import Footer from '@/components/common/footer';
 import Header from '@/components/common/header';
-import { Toaster } from '@/components/ui/toaster';
+import { Toaster } from '@/components/ui/sonner';
 
 const figtree = Figtree({
   subsets: ['latin'],

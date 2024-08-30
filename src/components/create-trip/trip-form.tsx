@@ -6,8 +6,8 @@ import type { ReactNode } from 'react';
 import { useState } from 'react';
 import type { Control, UseFormSetValue, UseFormTrigger } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
-import { useToast } from '@/components/ui/use-toast';
 import { CreateTripSchema } from '@/lib/schema/create-trip';
 import type { CreateTripType } from '@/lib/types/create-trip';
 
@@ -57,7 +57,6 @@ function MountFormPage({
 export default function TripForm() {
   const [formStep, setFormStep] = useState<number>(1);
   const [disableBtn, setDisableBtn] = useState<boolean>(false);
-  const { toast } = useToast();
 
   const form = useForm<CreateTripType>({
     defaultValues: {
@@ -88,20 +87,16 @@ export default function TripForm() {
     });
     const response = await data.json();
 
-    if (response.error) {
-      toast({
-        variant: 'destructive',
-        description: 'Internal Server error',
+    if (response.error)
+      toast.error('Internal server error', { className: '!text-red-700' });
+    else if (response.message.includes('not logged'))
+      toast.warning('Uh oh! You are not logged in!', {
+        className: '!text-yellow-700',
       });
-    } else if (response.message.includes('not logged')) {
-      toast({
-        title: 'Uh oh! You are not logged in!',
+    else
+      toast.success('Form submitted successfully.', {
+        className: '!text-green-700',
       });
-    } else {
-      toast({
-        title: 'Form submitted successfully.',
-      });
-    }
     setDisableBtn(false);
   };
 

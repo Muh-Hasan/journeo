@@ -1,4 +1,5 @@
 import { IconPlus } from '@tabler/icons-react';
+import Link from 'next/link';
 import React from 'react';
 
 import TripCard from '@/components/trips/trip-card';
@@ -9,10 +10,12 @@ const Trips = () => {
     <div className="container space-y-10">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-medium">Your Trips</h2>
-        <Button className="space-x-1">
-          <IconPlus className="size-5" />
-          <span>New trip</span>
-        </Button>
+        <Link href="/create-trip">
+          <Button className="space-x-1">
+            <IconPlus className="size-5" />
+            <span>New trip</span>
+          </Button>
+        </Link>
       </div>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         <TripCard

@@ -3,6 +3,7 @@
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { Popover, PopoverTrigger } from '@radix-ui/react-popover';
 import { format } from 'date-fns';
+import { Loader } from 'lucide-react';
 import type { Control } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
@@ -190,6 +191,7 @@ const HotelDetails: React.FC<Props> = ({ stepfn, control, btnState }) => {
           variant="secondary"
           className="w-[30%]"
           onClick={() => stepfn(2)}
+          disabled={btnState}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -209,70 +211,7 @@ const HotelDetails: React.FC<Props> = ({ stepfn, control, btnState }) => {
           </svg>
         </Button>
         <Button type="submit" disabled={btnState} className="w-[70%]">
-          {btnState ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width={35}
-              viewBox="0 0 200 200"
-            >
-              <circle
-                fill="#FFFEF7"
-                stroke="#FFFEF7"
-                stroke-width="2"
-                r="15"
-                cx="40"
-                cy="100"
-              >
-                <animate
-                  attributeName="opacity"
-                  calcMode="spline"
-                  dur="1.4"
-                  values="1;0;1;"
-                  keySplines=".5 0 .5 1;.5 0 .5 1"
-                  repeatCount="indefinite"
-                  begin="-.4"
-                />
-              </circle>
-              <circle
-                fill="#FFFEF7"
-                stroke="#FFFEF7"
-                stroke-width="2"
-                r="15"
-                cx="100"
-                cy="100"
-              >
-                <animate
-                  attributeName="opacity"
-                  calcMode="spline"
-                  dur="1.4"
-                  values="1;0;1;"
-                  keySplines=".5 0 .5 1;.5 0 .5 1"
-                  repeatCount="indefinite"
-                  begin="-.2"
-                />
-              </circle>
-              <circle
-                fill="#FFFEF7"
-                stroke="#FFFEF7"
-                stroke-width="2"
-                r="15"
-                cx="160"
-                cy="100"
-              >
-                <animate
-                  attributeName="opacity"
-                  calcMode="spline"
-                  dur="1.4"
-                  values="1;0;1;"
-                  keySplines=".5 0 .5 1;.5 0 .5 1"
-                  repeatCount="indefinite"
-                  begin="0"
-                />
-              </circle>
-            </svg>
-          ) : (
-            'Submit'
-          )}
+          {btnState ? <Loader className="animate-spin" /> : 'Submit'}
         </Button>
       </div>
     </>
