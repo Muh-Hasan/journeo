@@ -6,6 +6,7 @@ import type { ReactNode } from 'react';
 import { useState } from 'react';
 import type { Control, UseFormSetValue, UseFormTrigger } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 import { CreateTripSchema } from '@/lib/schema/create-trip';
 import type { CreateTripType } from '@/lib/types/create-trip';
@@ -21,12 +22,14 @@ function MountFormPage({
   setValue,
   control,
   trigger,
+  btnState,
 }: {
   step: number;
   stepfn: (num: number) => void;
   setValue: UseFormSetValue<CreateTripType>;
   control: Control<CreateTripType>;
   trigger: UseFormTrigger<CreateTripType>;
+  btnState: boolean;
 }): ReactNode {
   switch (step) {
     case 1:
@@ -43,15 +46,17 @@ function MountFormPage({
         <FlightDetails stepfn={stepfn} control={control} trigger={trigger} />
       );
     case 3:
-      return <HotelDetails stepfn={stepfn} control={control} />;
+      return (
+        <HotelDetails stepfn={stepfn} control={control} btnState={btnState} />
+      );
     default:
-      // handle err here
       stepfn(1);
   }
 }
 
 export default function TripForm() {
   const [formStep, setFormStep] = useState<number>(1);
+  const [disableBtn, setDisableBtn] = useState<boolean>(false);
 
   const form = useForm<CreateTripType>({
     defaultValues: {
@@ -71,7 +76,29 @@ export default function TripForm() {
 
   const { control, handleSubmit, trigger, setValue } = form;
 
-  const onSubmit = (values: CreateTripType) => values;
+  const onSubmit = async (values: CreateTripType) => {
+    setDisableBtn(true);
+    const data = await fetch('/api/create-trip/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(values),
+    });
+    const response = await data.json();
+
+    if (response.error)
+      toast.error('Internal server error', { className: '!text-red-700' });
+    else if (response.message.includes('not logged'))
+      toast.warning('Uh oh! You are not logged in!', {
+        className: '!text-yellow-700',
+      });
+    else
+      toast.success('Form submitted successfully.', {
+        className: '!text-green-700',
+      });
+    setDisableBtn(false);
+  };
 
   return (
     <div className="w-[300px] xs:w-[400px] sm:w-[600px]">
@@ -84,6 +111,7 @@ export default function TripForm() {
               setValue={setValue}
               control={control}
               trigger={trigger}
+              btnState={disableBtn}
             />
           </div>
         </form>

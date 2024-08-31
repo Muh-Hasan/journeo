@@ -3,6 +3,7 @@
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { Popover, PopoverTrigger } from '@radix-ui/react-popover';
 import { format } from 'date-fns';
+import { Loader } from 'lucide-react';
 import type { Control } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
@@ -22,9 +23,10 @@ import { cn } from '@/lib/utils';
 interface Props {
   stepfn: (num: number) => void;
   control: Control<CreateTripType>;
+  btnState: boolean;
 }
 
-const HotelDetails: React.FC<Props> = ({ stepfn, control }) => {
+const HotelDetails: React.FC<Props> = ({ stepfn, control, btnState }) => {
   return (
     <>
       <div className="text-center text-2xl sm:text-4xl">
@@ -189,6 +191,7 @@ const HotelDetails: React.FC<Props> = ({ stepfn, control }) => {
           variant="secondary"
           className="w-[30%]"
           onClick={() => stepfn(2)}
+          disabled={btnState}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -207,8 +210,8 @@ const HotelDetails: React.FC<Props> = ({ stepfn, control }) => {
             <path d="M5 12l6 -6" />
           </svg>
         </Button>
-        <Button type="submit" className="w-[70%]">
-          Submit
+        <Button type="submit" disabled={btnState} className="w-[70%]">
+          {btnState ? <Loader className="animate-spin" /> : 'Submit'}
         </Button>
       </div>
     </>
