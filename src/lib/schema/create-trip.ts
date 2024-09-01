@@ -2,7 +2,8 @@ import { differenceInCalendarDays, isAfter } from 'date-fns';
 import { z } from 'zod';
 
 export const CreateTripSchema = z.object({
-  destination: z.string().min(1, 'Destination is required'),
+  city: z.string().min(1, 'This field is required'),
+
   duration: z
     .object({
       to: z.date(),
@@ -17,15 +18,14 @@ export const CreateTripSchema = z.object({
         message: 'The duration must be within 90 days time period.',
       },
     ),
-  times: z
-    .object({
-      start: z.number(),
-      end: z.number(),
-    })
-    .refine((elem) => elem.start && elem.end, {
-      message: 'Timings are required',
-    }),
+
+  day: z.object({
+    start: z.number().optional(),
+    end: z.number().optional(),
+  }),
+
   visibility: z.boolean(),
+
   flightFrom: z.string().min(1, 'City name is required'),
   flightTo: z.string().min(1, 'City name is required'),
   flightDate: z.date(),
