@@ -1,52 +1,59 @@
-import { differenceInCalendarDays, isAfter } from 'date-fns';
+import { differenceInCalendarDays, isBefore, parse } from 'date-fns';
 import { z } from 'zod';
 
+const requiredErrorMessage = 'This field is required';
+
+const isStartTimeBeforeEndTime = (start?: string, end?: string): boolean => {
+  if (start && end) {
+    const startTime = parse(start, 'hh:mm a', new Date());
+    const endTime = parse(end, 'hh:mm a', new Date());
+    return isBefore(startTime, endTime);
+  }
+  return true;
+};
+
 export const CreateTripSchema = z.object({
-  city: z.string().min(1, 'This field is required'),
+  city: z
+    .string({ required_error: requiredErrorMessage })
+    .min(1, requiredErrorMessage),
 
   duration: z
     .object({
       to: z.date(),
       from: z.date(),
     })
-    .refine(
-      (duration) =>
-        duration.from &&
-        duration.to &&
-        differenceInCalendarDays(duration.to, duration.from) <= 90,
-      {
-        message: 'The duration must be within 90 days time period.',
-      },
-    ),
+    .refine(({ from, to }) => differenceInCalendarDays(to, from) <= 90, {
+      message: 'The duration must be within a 90-day time period.',
+    }),
 
-  day: z.object({
-    start: z.number().optional(),
-    end: z.number().optional(),
-  }),
+  day: z
+    .object({
+      start: z.string().optional(),
+      end: z.string().optional(),
+    })
+    .refine(({ start, end }) => isStartTimeBeforeEndTime(start, end), {
+      message: 'Start time must be before end time',
+    }),
 
   visibility: z.boolean(),
 
-  flightFrom: z.string().min(1, 'City name is required'),
-  flightTo: z.string().min(1, 'City name is required'),
-  flightDate: z.date(),
-  flightNo: z.string().min(1, 'Flight number is required'),
-  ticektNo: z.string().min(1, 'Ticket number is required'),
-  hotelBooking: z.string().min(1, 'Booking confirmation is required'),
-  hotelName: z.string().min(1, 'Hotel name is required'),
-  hotelPhone: z
-    .string()
-    .regex(/^\+\d{1,3}-\d{7,15}$/, {
-      message: 'Invalid phone number format\nExample: +91-1234567890',
-    })
-    .optional(),
-  hotelLocation: z.string().min(1, 'Location is required'),
-  checkIn: z
-    .object({
-      start: z.date(),
-      end: z.date(),
-    })
-    .refine(({ start, end }) => start && end && isAfter(end, start), {
-      message: 'Check-out date must be after check-in date',
-      path: ['end'],
-    }),
+  flightFrom: z
+    .string({ required_error: requiredErrorMessage })
+    .min(1, requiredErrorMessage),
+
+  flightNo: z
+    .string({ required_error: requiredErrorMessage })
+    .min(1, requiredErrorMessage),
+
+  ticketNo: z
+    .string({ required_error: requiredErrorMessage })
+    .min(1, requiredErrorMessage),
+
+  hotelBooking: z
+    .string({ required_error: requiredErrorMessage })
+    .min(1, requiredErrorMessage),
+
+  hotel: z
+    .string({ required_error: requiredErrorMessage })
+    .min(1, requiredErrorMessage),
 });

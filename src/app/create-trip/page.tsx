@@ -3,10 +3,10 @@ import CreateTripForm from '@/components/create-trip/trip-form';
 
 export default function CreateTrip() {
   return (
-    <div className="flex grow items-center justify-center">
+    <section className="container flex grow items-center md:justify-center md:px-0">
       <FormProvider>
         <CreateTripForm />
       </FormProvider>
-    </div>
+    </section>
   );
 }

@@ -1,29 +1,21 @@
 'use client';
 
-// import { zodResolver } from '@hookform/resolvers/zod';
-// import { addDays } from 'date-fns';
-// import type { ReactNode } from 'react';
-// import { useState } from 'react';
-// import type { Control, UseFormSetValue, UseFormTrigger } from 'react-hook-form';
-// import { useForm } from 'react-hook-form';
-// import { toast } from 'sonner';
+import { IconChevronLeft } from '@tabler/icons-react';
 
+import { cn } from '@/lib/utils';
+
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { useFormContext } from './form-provider';
 import StepOne from './step-one';
 import StepThree from './step-three';
 import StepTwo from './step-two';
 
-const renderFormStep = (formStep: number) => {
-  switch (formStep) {
-    case 1:
-      return <StepOne />;
-    case 2:
-      return <StepTwo />;
-    case 3:
-      return <StepThree />;
-    default:
-      return null;
-  }
+type FormStep = 1 | 2 | 3;
+
+const formSteps: Record<FormStep, React.ComponentType> = {
+  1: StepOne,
+  2: StepTwo,
+  3: StepThree,
 };
 
 const CreateTripForm = () => {
@@ -31,8 +23,33 @@ const CreateTripForm = () => {
     form: { handleSubmit },
     step,
     onSubmit,
+    setStep,
   } = useFormContext();
 
-  return <form onSubmit={handleSubmit(onSubmit)}>{renderFormStep(step)}</form>;
+  const CurrentStep = formSteps[step as FormStep] || null;
+
+  return (
+    <Card className="w-full space-y-8 md:w-[512px]">
+      <CardHeader>
+        <div className="flex items-center gap-4">
+          <button
+            aria-label="Button Button"
+            type="button"
+            className={cn(step === 1 && 'hidden')}
+            onClick={() => setStep((s) => s - 1)}
+          >
+            <IconChevronLeft className="size-6" />
+          </button>
+          <CardTitle>Plan Your Next Trip</CardTitle>
+        </div>
+      </CardHeader>
+      <CardContent>
+        <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+          {CurrentStep && <CurrentStep />}
+        </form>
+      </CardContent>
+    </Card>
+  );
 };
+
 export default CreateTripForm;

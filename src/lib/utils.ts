@@ -1,5 +1,14 @@
 import { type ClassValue, clsx } from 'clsx';
-import { addMinutes, format, fromUnixTime, getTime, parse } from 'date-fns';
+import {
+  addHours,
+  addMinutes,
+  format,
+  fromUnixTime,
+  getTime,
+  isBefore,
+  parse,
+  startOfDay,
+} from 'date-fns';
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
@@ -21,6 +30,20 @@ export const generateTimeOptions = (
     const unixTime = getTime(currentTime) / 1000;
     const displayTime = format(currentTime, 'h:mm a');
     options.push({ unix: unixTime, display: displayTime });
+    currentTime = addMinutes(currentTime, 30);
+  }
+
+  return options;
+};
+
+export const generateTimeOptionsInStr = (): string[] => {
+  const options: string[] = [];
+  const start = startOfDay(new Date());
+  const end = addHours(start, 24);
+  let currentTime = start;
+
+  while (isBefore(currentTime, end)) {
+    options.push(format(currentTime, 'hh:mm a'));
     currentTime = addMinutes(currentTime, 30);
   }
 

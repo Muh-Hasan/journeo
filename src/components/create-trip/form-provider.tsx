@@ -24,6 +24,16 @@ const FormContext = createContext<FormContextType | undefined>(undefined);
 export const FormProvider = ({ children }: { children: ReactNode }) => {
   const form = useForm<CreateTripType>({
     resolver: zodResolver(CreateTripSchema),
+    defaultValues: {
+      day: {
+        start: '09:00 AM',
+        end: '09:00 PM',
+      },
+      duration: {
+        from: new Date(),
+        to: new Date(),
+      },
+    },
   });
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
